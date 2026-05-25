@@ -340,9 +340,16 @@ button, input, select, textarea {
   justify-content: space-between;
   align-items: center;
   transition: var(--transition-smooth);
-  background-color: rgba(13, 11, 9, 0.8);
-  backdrop-filter: blur(20px);
-  border-bottom: 0.5px solid rgba(212, 168, 67, 0.08);
+  background-color: transparent;
+  backdrop-filter: none;
+  border-bottom: 0.5px solid transparent;
+}
+
+.header-nav.scrolled {
+  background-color: rgba(13, 11, 9, 0.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 0.5px solid rgba(212, 168, 67, 0.12);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
 }
 
 .nav-logo {
@@ -411,8 +418,6 @@ button, input, select, textarea {
   .header-nav.scrolled {
     padding: 15px 60px;
     background-color: rgba(13, 11, 9, 0.9);
-    border-bottom: 0.5px solid rgba(212, 168, 67, 0.12);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
   }
   
   .nav-logo {
@@ -1364,12 +1369,8 @@ button, input, select, textarea {
 
 .reel-card {
   background-color: var(--surface-card);
-  border: 1.5px solid transparent;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
-  background-clip: padding-box, border-box;
-  background-origin: padding-box, border-box;
-  background-image: linear-gradient(var(--surface-card), var(--surface-card)), 
-                    linear-gradient(135deg, rgba(212, 168, 67, 0.12) 0%, rgba(196, 90, 26, 0.15) 100%);
   overflow: hidden;
   position: relative;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
@@ -1380,9 +1381,8 @@ button, input, select, textarea {
 }
 
 .reel-card.active, .reel-card:hover {
-  background-image: linear-gradient(var(--surface-card), var(--surface-card)), 
-                    linear-gradient(135deg, var(--accent-gold) 0%, var(--primary) 100%);
-  box-shadow: 0 15px 40px rgba(196, 90, 26, 0.2);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
   transform: translateY(-8px);
 }
 

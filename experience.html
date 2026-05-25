@@ -396,13 +396,6 @@
         <div class="reveal">
           <div class="reel-card clickable" data-reel-id="DUK1KY-gXZd">
             <div class="reel-iframe-wrapper">
-              <div class="reel-placeholder" style="background-image: url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600&q=80');">
-                <div class="reel-placeholder-content">
-                  <div class="reel-play-btn"><i class="fa-solid fa-play"></i></div>
-                  <span class="reel-tag">Live Music Stage</span>
-                  <h3 class="reel-title">Soulful Kannada Melodies</h3>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -411,13 +404,6 @@
         <div class="reveal">
           <div class="reel-card clickable" data-reel-id="DUud4eQARZt">
             <div class="reel-iframe-wrapper">
-              <div class="reel-placeholder" style="background-image: url('https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600&q=80');">
-                <div class="reel-placeholder-content">
-                  <div class="reel-play-btn"><i class="fa-solid fa-play"></i></div>
-                  <span class="reel-tag">Authentic Taste</span>
-                  <h3 class="reel-title">Naati Biryani Secret Recipes</h3>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -426,13 +412,6 @@
         <div class="reveal">
           <div class="reel-card clickable" data-reel-id="DT5W-KIgU9k">
             <div class="reel-iframe-wrapper">
-              <div class="reel-placeholder" style="background-image: url('https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600&q=80');">
-                <div class="reel-placeholder-content">
-                  <div class="reel-play-btn"><i class="fa-solid fa-play"></i></div>
-                  <span class="reel-tag">Heritage Mixology</span>
-                  <h3 class="reel-title">Kannada Heritage Cocktails</h3>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -516,33 +495,7 @@
         });
       }
       
-      // 2. Cinematic Enter Scroll Pinned Sequence
-      if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
-        const isDesktop = window.innerWidth >= 1024;
-        
-        const pinTimeline = gsap.timeline({
-          scrollTrigger: {
-            trigger: ".pinned-zoom-section",
-            start: "top top",
-            end: isDesktop ? "+=1200" : "+=600", // Pinned length adjusted for mobile performance
-            scrub: true,
-            pin: true,
-            anticipatePin: 1
-          }
-        });
-        
-        pinTimeline
-          .to(".zoom-bg", { scale: isDesktop ? 1.25 : 1.12, duration: 2 }, 0)
-          .to(".zoom-overlay", { opacity: isDesktop ? 0.35 : 0.5, duration: 2 }, 0)
-          .fromTo(".zoom-content", 
-            { scale: 0.8, opacity: 0 }, 
-            { scale: 1, opacity: 1, duration: 1.5 }, 
-            0.2
-          )
-          .to(".zoom-content", { opacity: 1, duration: 1 });
-      }
-      
-      // 3. Stagger Reveal for Pinterest Gallery (Only if GSAP is available)
+      // 2. Stagger Reveal for Pinterest Gallery (Only if GSAP is available)
       if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
         gsap.from(".gallery-item", {
           scrollTrigger: {
