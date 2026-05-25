@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="What our guests say about Sarovara Restoobar. Read 4.6 star Google reviews and browse our Instagram reels feed.">
+  <title>Guest Reviews & Vibe | Sarovara Restoobar</title>
+  
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Central Design System Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Page Specific CSS -->
+  <style>
+    /* Mobile-First layout: Stacked columns */
+    .reviews-split-layout {
+      display: flex;
+      flex-direction: column;
+      gap: 60px;
+    }
+    
+    .reviews-left-col,
+    .reviews-right-col {
+      width: 100%;
+    }
+    
+    /* Left Side: Rating summary */
+    .rating-summary-container {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    
+    .rating-huge-num {
+      font-family: var(--font-display);
+      font-size: 4rem;
+      font-weight: 700;
+      color: var(--accent-gold);
+      line-height: 1;
+    }
+    
+    .rating-huge-stars {
+      color: var(--accent-gold);
+      font-size: 1rem;
+      margin-bottom: 3px;
+    }
+    
+    /* Star progress bar chart */
+    .star-bar-chart {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 40px;
+      width: 100%;
+      max-width: 450px;
+    }
+    
+    .star-bar-row {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-size: 0.85rem;
+    }
+    
+    .star-bar-label {
+      width: 45px;
+      color: var(--text-muted);
+    }
+    
+    .star-bar-bg {
+      flex-grow: 1;
+      height: 6px;
+      background-color: rgba(255,255,255,0.03);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    
+    .star-bar-fill {
+      height: 100%;
+      background-color: var(--primary);
+      border-radius: 10px;
+      width: 0%; /* Animated on scroll */
+    }
+    
+    .star-bar-pct {
+      width: 40px;
+      text-align: right;
+      color: var(--text-muted);
+    }
+    
+    .reviewer-cards-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    
+    /* Right Side: Instagram feeds (Mobile-First single column) */
+    .insta-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+    
+    .insta-post-card {
+      background-color: var(--surface-card);
+      border: 1.5px solid transparent;
+      border-radius: 16px;
+      background-clip: padding-box, border-box;
+      background-origin: padding-box, border-box;
+      background-image: linear-gradient(var(--surface-card), var(--surface-card)), 
+                        linear-gradient(135deg, rgba(212,168,67,0.1) 0%, rgba(196,90,26,0.12) 100%);
+      overflow: hidden;
+      transition: var(--transition-smooth);
+    }
+    
+    .insta-header {
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 0.5px solid rgba(212,168,67,0.08);
+    }
+    
+    .insta-user {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .insta-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+      padding: 2px;
+    }
+    
+    .insta-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 1.5px solid var(--surface-card);
+    }
+    
+    .insta-username {
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    
+    .insta-media-wrapper {
+      position: relative;
+      height: 300px;
+      overflow: hidden;
+    }
+    
+    .insta-media-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .insta-play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: rgba(13, 11, 9, 0.6);
+      border: 1.5px solid var(--white);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      transition: var(--transition-smooth);
+    }
+    
+    .insta-caption {
+      padding: 15px 20px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-top: 0.5px solid rgba(212, 168, 67, 0.08);
+    }
+    
+    .insta-caption strong {
+      color: var(--text-light);
+      margin-right: 5px;
+    }
+    
+    /* Responsive Progressive Enhancements */
+    @media (min-width: 768px) {
+      .rating-huge-num {
+        font-size: 5rem;
+      }
+      .rating-huge-stars {
+        font-size: 1.2rem;
+      }
+      .rating-summary-container {
+        gap: 30px;
+      }
+      .insta-media-wrapper {
+        height: 350px;
+      }
+      .insta-play-btn {
+        width: 60px;
+        height: 60px;
+        font-size: 1.4rem;
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      .reviews-split-layout {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 70px;
+      }
+      .insta-post-card:hover {
+        background-image: linear-gradient(var(--surface-card), var(--surface-card)), 
+                          linear-gradient(135deg, rgba(212,168,67,0.3) 0%, var(--primary) 100%);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      }
+      .insta-post-card:hover .insta-media-img {
+        transform: scale(1.03);
+      }
+      .insta-post-card:hover .insta-play-btn {
+        background-color: var(--primary);
+        border-color: var(--primary);
+        transform: translate(-50%, -50%) scale(1.1);
+        box-shadow: 0 0 20px var(--primary-glow);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Scroll Progress Bar -->
+  <div class="scroll-progress"></div>
+
+  <!-- Noise Film Grain Overlay -->
+  <div class="noise-overlay"></div>
+
+  <!-- Custom Cursor Elements -->
+  <div class="custom-cursor-dot"></div>
+  <div class="custom-cursor-circle"></div>
+
+  <!-- Page Loader -->
+  <div class="page-loader">
+    <div class="loader-content">
+      <div class="loader-logo">Sarovara<span>Restoobar</span></div>
+      <div class="loader-bar-bg">
+        <div class="loader-bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVIGATION -->
+  <header class="header-nav">
+    <a href="index.html" class="nav-logo clickable">
+      <img src="assets/logo.svg" alt="Sarovara Restoobar Logo">
+    </a>
+    
+    <nav class="nav-links">
+      <a href="index.html" class="clickable">Home</a>
+      <a href="menu.html" class="clickable">Menu</a>
+      <a href="about.html" class="clickable">About</a>
+      <a href="experience.html" class="clickable">Experience</a>
+      <a href="reviews.html" class="active clickable">Reviews</a>
+      <a href="reserve.html" class="clickable">Reserve</a>
+    </nav>
+    
+    <div class="nav-cta">
+      <a href="reserve.html" class="btn btn-primary btn-shimmer clickable">Reserve a Table</a>
+    </div>
+    
+    <!-- Mobile Hamburger Toggle -->
+    <div class="hamburger clickable">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Overlay -->
+  <div class="mobile-nav-overlay">
+    <nav class="mobile-nav-links">
+      <a href="index.html" class="clickable">Home</a>
+      <a href="menu.html" class="clickable">Menu<span>Dishes</span></a>
+      <a href="about.html" class="clickable">About<span>Roots</span></a>
+      <a href="experience.html" class="clickable">Experience<span>Vibe</span></a>
+      <a href="reviews.html" class="active clickable">Reviews<span>Guests</span></a>
+      <a href="reserve.html" class="clickable">Reserve<span>Book</span></a>
+    </nav>
+    <div class="mobile-cta-wrapper">
+      <a href="reserve.html" class="btn btn-primary btn-shimmer clickable">Reserve a Table</a>
+    </div>
+  </div>
+
+  <!-- SUB-HERO BANNER -->
+  <section class="sub-hero">
+    <div class="sub-hero-bg" style="background-image: url('https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=1920&q=90');"></div>
+    <div class="sub-hero-overlay"></div>
+    <div class="sub-hero-content">
+      <span class="sub-hero-accent">Guest Feedback</span>
+      <h1 class="sub-hero-title">What Our Guests Say</h1>
+      <p class="sub-hero-desc">Real reviews from our beloved community of diners and social vibes from Bengaluru.</p>
+    </div>
+  </section>
+
+  <!-- REVIEWS CONTENT -->
+  <section class="section-padding" style="background-color: var(--bg-charcoal);">
+    <div class="container">
+      <div class="reviews-split-layout">
+        
+        <!-- LEFT COLUMN: Google Ratings -->
+        <div class="reviews-left-col">
+          <span class="section-accent" style="text-align: left;">Google Community</span>
+          <h2 class="section-title split-text" style="text-align: left; margin-bottom: 30px;">Diner Testimonials</h2>
+          
+          <div class="rating-summary-container reveal">
+            <div class="rating-huge-num">4.6</div>
+            <div>
+              <div class="rating-huge-stars">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star-half-stroke"></i>
+              </div>
+              <p style="color: var(--text-muted); font-size: 0.9rem;">Based on 411 Google Reviews</p>
+            </div>
+          </div>
+          
+          <!-- Rating Progress Bars -->
+          <div class="star-bar-chart reveal">
+            <!-- 5 Star -->
+            <div class="star-bar-row">
+              <span class="star-bar-label">5 star</span>
+              <div class="star-bar-bg">
+                <div class="star-bar-fill" data-width="82%"></div>
+              </div>
+              <span class="star-bar-pct">82%</span>
+            </div>
+            <!-- 4 Star -->
+            <div class="star-bar-row">
+              <span class="star-bar-label">4 star</span>
+              <div class="star-bar-bg">
+                <div class="star-bar-fill" data-width="12%"></div>
+              </div>
+              <span class="star-bar-pct">12%</span>
+            </div>
+            <!-- 3 Star -->
+            <div class="star-bar-row">
+              <span class="star-bar-label">3 star</span>
+              <div class="star-bar-bg">
+                <div class="star-bar-fill" data-width="4%"></div>
+              </div>
+              <span class="star-bar-pct">4%</span>
+            </div>
+            <!-- 2 Star -->
+            <div class="star-bar-row">
+              <span class="star-bar-label">2 star</span>
+              <div class="star-bar-bg">
+                <div class="star-bar-fill" data-width="1%"></div>
+              </div>
+              <span class="star-bar-pct">1%</span>
+            </div>
+            <!-- 1 Star -->
+            <div class="star-bar-row">
+              <span class="star-bar-label">1 star</span>
+              <div class="star-bar-bg">
+                <div class="star-bar-fill" data-width="1%"></div>
+              </div>
+              <span class="star-bar-pct">1%</span>
+            </div>
+          </div>
+          
+          <!-- Testimonials List -->
+          <div class="reviewer-cards-stack">
+            <!-- Review 1 -->
+            <div class="review-card reveal">
+              <div class="review-header">
+                <div class="reviewer-avatar">RK</div>
+                <div class="reviewer-info">
+                  <h4>Rajesh Kumar</h4>
+                  <div class="reviewer-rating">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="review-excerpt">"Sarovara Restoobar serves the best Naati Mutton Biryani in Kengeri! The mutton pieces were incredibly tender, and the spices were perfectly balanced. The Kannada songs ambient vibe made us feel very nostalgic. Visited with my family, outstanding hospitality."</p>
+            </div>
+            
+            <!-- Review 2 -->
+            <div class="review-card reveal">
+              <div class="review-header">
+                <div class="reviewer-avatar">MG</div>
+                <div class="reviewer-info">
+                  <h4>Meghana Gowda</h4>
+                  <div class="reviewer-rating">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="review-excerpt">"Loved the happy-hour food menu and the Mangalorean seafood! The Karavali fish fry was fresh, spicy, and delicious. Excellent cocktails. The live Kannada musician was outstanding. Great parking facilities next to the metro. Worth every rupee!"</p>
+            </div>
+            
+            <!-- Review 3 -->
+            <div class="review-card reveal">
+              <div class="review-header">
+                <div class="reviewer-avatar">AM</div>
+                <div class="reviewer-info">
+                  <h4>Ananth Murthy</h4>
+                  <div class="reviewer-rating">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="review-excerpt">"Very premium environment. The private dining room was perfect for my daughter's birthday celebration. The ragi mudde with mutton curry is an absolute must-try. A bit crowded on weekends, so make sure to reserve a table in advance."</p>
+            </div>
+          </div>
+          
+          <div class="reveal">
+            <a href="https://maps.app.goo.gl/kengerilocation" target="_blank" class="btn btn-outline clickable">Read All Google Reviews <i class="fa-solid fa-external-link" style="margin-left: 8px; font-size: 0.8rem;"></i></a>
+          </div>
+        </div>
+        
+        <!-- RIGHT COLUMN: Instagram Vibe Feed -->
+        <div class="reviews-right-col">
+          <span class="section-accent" style="text-align: left;">Instagram Vibe</span>
+          <h2 class="section-title split-text" style="text-align: left; margin-bottom: 30px;">Follow Our Grid</h2>
+          
+          <div class="insta-grid">
+            
+            <!-- Reel 1 -->
+            <div class="insta-post-card reveal">
+              <div class="insta-header">
+                <div class="insta-user">
+                  <div class="insta-avatar">
+                    <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=100&q=80" alt="Sarovara Avatar">
+                  </div>
+                  <span class="insta-username">sarovara.restoobar</span>
+                </div>
+                <i class="fa-brands fa-instagram" style="color: var(--primary);"></i>
+              </div>
+              <div class="insta-media-wrapper">
+                <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=600&q=80" alt="Live Music Night Reel Cover" class="insta-media-img">
+                <a href="https://www.instagram.com/sarovara.restoobar/" target="_blank" class="insta-play-btn clickable">
+                  <i class="fa-solid fa-play"></i>
+                </a>
+              </div>
+              <div class="insta-caption">
+                <strong>sarovara.restoobar</strong> Soulful melodies, hot spices, and cozy nights in Kengeri. Join us for live Kannada classics tonight! #LiveMusic #KengeriVibes
+              </div>
+            </div>
+            
+            <!-- Reel 2 -->
+            <div class="insta-post-card reveal">
+              <div class="insta-header">
+                <div class="insta-user">
+                  <div class="insta-avatar">
+                    <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=100&q=80" alt="Sarovara Avatar">
+                  </div>
+                  <span class="insta-username">sarovara.restoobar</span>
+                </div>
+                <i class="fa-brands fa-instagram" style="color: var(--primary);"></i>
+              </div>
+              <div class="insta-media-wrapper">
+                <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600&q=80" alt="Making of Biryani Reel Cover" class="insta-media-img">
+                <a href="https://www.instagram.com/sarovara.restoobar/" target="_blank" class="insta-play-btn clickable">
+                  <i class="fa-solid fa-play"></i>
+                </a>
+              </div>
+              <div class="insta-caption">
+                <strong>sarovara.restoobar</strong> Sourcing jeeraga samba rice and hand-grinding spices daily to bring you authentic Naati flavours. #NaatiBiryani #BengaluruFoodies
+              </div>
+            </div>
+            
+            <div class="reveal">
+              <a href="https://www.instagram.com/sarovara.restoobar/" target="_blank" class="btn btn-primary btn-shimmer clickable" style="width: 100%; display: flex; gap: 10px;">
+                <i class="fa-brands fa-instagram"></i> Follow @sarovara.restoobar
+              </a>
+            </div>
+            
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-info-col">
+        <div class="footer-logo"><img src="assets/logo.svg" alt="Sarovara Restoobar Logo"></div>
+        <p>A premier fine-dining resto-bar located in Kengeri, Bengaluru. Celebrating the rich flavors of Naati cuisine and heritage Kannada music.</p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/sarovara.restoobar/" target="_blank" class="social-icon clickable"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="social-icon clickable"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="https://maps.app.goo.gl/kengerilocation" target="_blank" class="social-icon clickable"><i class="fa-solid fa-map-location-dot"></i></a>
+        </div>
+      </div>
+      
+      <div class="footer-col">
+        <h3>Explore</h3>
+        <div class="footer-links">
+          <a href="index.html" class="clickable">Home</a>
+          <a href="menu.html" class="clickable">Menu</a>
+          <a href="about.html" class="clickable">About Story</a>
+          <a href="experience.html" class="clickable">Vibe & Ambiance</a>
+          <a href="reviews.html" class="clickable">Reviews</a>
+          <a href="reserve.html" class="clickable">Reservations</a>
+        </div>
+      </div>
+      
+      <div class="footer-col">
+        <h3>Hours</h3>
+        <div class="footer-hours">
+          <p><i class="fa-regular fa-clock"></i> Daily: 11:00 AM – 12:00 AM</p>
+          <p><i class="fa-solid fa-martini-glass"></i> Happy Hours: 4:00 PM – 7:00 PM</p>
+          <p><i class="fa-solid fa-music"></i> Live Music: 7:30 PM onwards</p>
+        </div>
+      </div>
+      
+      <div class="footer-col">
+        <h3>Contact</h3>
+        <div class="footer-contact">
+          <p><i class="fa-solid fa-phone"></i> 099000 06391 / 06392</p>
+          <p><i class="fa-solid fa-location-dot"></i> Metro Station, Mysore Rd, next to Kengeri, Bengaluru – 560060</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>© 2025 Sarovara Restoobar · Kengeri, Bengaluru. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top clickable"><i class="fa-solid fa-arrow-up"></i></button>
+
+  <!-- External CDN Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+  
+  <!-- Central JS Interactions -->
+  <script src="main.js"></script>
+  
+  <!-- Page Specific GSAP Animations -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // 1. Sub-Hero Parallax (Only on desktop viewports)
+      if (window.innerWidth >= 1024 && typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
+        gsap.to(".sub-hero-bg", {
+          scrollTrigger: {
+            trigger: ".sub-hero",
+            start: "top top",
+            end: "bottom top",
+            scrub: true
+          },
+          yPercent: 15,
+          ease: "none"
+        });
+      }
+      
+      // 2. Animate rating progress bars on scroll enter (using dynamic widths)
+      if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
+        const starBarFills = document.querySelectorAll(".star-bar-fill");
+        
+        gsap.to(starBarFills, {
+          scrollTrigger: {
+            trigger: ".star-bar-chart",
+            start: "top 85%",
+            toggleActions: "play none none none"
+          },
+          width: (index, target) => target.getAttribute("data-width"),
+          duration: 1.2,
+          stagger: 0.1,
+          ease: "power2.out"
+        });
+        
+        // 3. Stagger reveal column layouts on large screen
+        if (window.innerWidth >= 1024) {
+          gsap.from(".reviews-left-col > *", {
+            scrollTrigger: {
+              trigger: ".reviews-split-layout",
+              start: "top 80%",
+              toggleActions: "play none none none"
+            },
+            x: -40,
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.08,
+            ease: "power2.out"
+          });
+          
+          gsap.from(".reviews-right-col .insta-post-card, .reviews-right-col .btn", {
+            scrollTrigger: {
+              trigger: ".reviews-split-layout",
+              start: "top 80%",
+              toggleActions: "play none none none"
+            },
+            x: 40,
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.12,
+            ease: "power2.out"
+          });
+        } else {
+          // On mobile, just do simple fade up reveal
+          gsap.from(".reviews-left-col, .reviews-right-col", {
+            scrollTrigger: {
+              trigger: ".reviews-split-layout",
+              start: "top 85%",
+              toggleActions: "play none none none"
+            },
+            y: 30,
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: "power2.out"
+          });
+        }
+      }
+    });
+  </script>
+</body>
+</html>

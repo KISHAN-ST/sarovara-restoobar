@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Welcome to Sarovara Restoobar - The premium fine-dining resto-bar in Kengeri, Bengaluru. Taste the authentic roots of Karnataka Naati cuisine.">
+  <title>Sarovara Restoobar | Fine Dining & Naati Cuisine | Kengeri, Bengaluru</title>
+  
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    html.lenis {
+      height: auto;
+    }
+    .lenis-smooth {
+      scroll-behavior: auto;
+    }
+    .lenis-smooth [data-lenis-prevent] {
+      overscroll-behavior: contain;
+    }
+    .lenis-stopped {
+      overflow: hidden;
+    }
+    .lenis-scrolling iframe {
+      pointer-events: none;
+    }
+  </style>
+
+  <!-- Central Design System Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Page Specific Styling (Hero Particles & Mobile-First Redesign overrides) -->
+  <style>
+    /* Hero Section CSS (Mobile-First) */
+    .hero {
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 20px;
+    }
+    
+    .hero-bg-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 115%; /* Extra height for parallax */
+      z-index: 1;
+      will-change: transform;
+    }
+    
+    .hero-bg {
+      width: 100%;
+      height: 100%;
+      background-image: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=90');
+      background-size: cover;
+      background-position: center;
+    }
+    
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      background: 
+        linear-gradient(to bottom, rgba(13, 11, 9, 0.5) 0%, rgba(13, 11, 9, 0.85) 75%, rgba(13, 11, 9, 1) 100%),
+        radial-gradient(circle at center, rgba(196, 90, 26, 0.2) 0%, rgba(0, 0, 0, 0) 80%),
+        linear-gradient(to right, rgba(13, 11, 9, 0.6) 0%, rgba(13, 11, 9, 0) 30%, rgba(13, 11, 9, 0) 70%, rgba(13, 11, 9, 0.6) 100%);
+    }
+    
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      width: 100%;
+      max-width: 900px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .hero-label {
+      font-family: var(--font-accent);
+      color: var(--accent-gold);
+      font-size: 2rem;
+      margin-bottom: 5px;
+      letter-spacing: 2px;
+      display: inline-block;
+    }
+    
+    @media (min-width: 768px) {
+      .hero-label {
+        font-size: 2.5rem;
+      }
+    }
+    
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: var(--h1-size);
+      font-weight: 300;
+      line-height: 1.15;
+      letter-spacing: -1px;
+      margin-bottom: 20px;
+      color: var(--text-light);
+    }
+    
+    .hero-title span {
+      color: var(--primary);
+      font-family: var(--font-display);
+      font-weight: 600;
+    }
+    
+    .hero-desc {
+      font-family: var(--font-sub);
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      margin-bottom: 35px;
+      max-width: 600px;
+    }
+    
+    @media (min-width: 768px) {
+      .hero-desc {
+        font-size: 1.4rem;
+      }
+    }
+    
+    .hero-ctas {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      width: 100%;
+      max-width: 280px;
+    }
+    
+    @media (min-width: 768px) {
+      .hero-ctas {
+        flex-direction: row;
+        justify-content: center;
+        max-width: none;
+        gap: 20px;
+      }
+    }
+    
+    /* Ratings Badge - Mobile Hidden, Desktop Floating Absolute */
+    .hero-rating-badge {
+      display: none;
+    }
+    
+    .hero-rating-badge i {
+      color: var(--accent-gold);
+    }
+    
+    .hero-rating-badge span {
+      font-weight: 500;
+      letter-spacing: 1px;
+    }
+    
+    @media (min-width: 1024px) {
+      .hero-rating-badge {
+        display: inline-flex;
+        position: absolute;
+        right: 60px;
+        bottom: 60px;
+        margin-top: 0;
+        font-size: 0.85rem;
+        padding: 12px 24px;
+        background-color: rgba(20, 17, 15, 0.75);
+        border: 1px solid rgba(212, 168, 67, 0.1);
+        border-radius: 50px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        transition: var(--transition-smooth);
+      }
+      .hero-rating-badge:hover {
+        border-color: var(--primary);
+        box-shadow: 0 4px 30px var(--primary-glow);
+        transform: translateY(-3px);
+      }
+    }
+    
+    /* CSS Particles */
+    .particles-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    
+    .particle {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background-color: var(--primary);
+      border-radius: 50%;
+      opacity: 0;
+      bottom: -10px;
+      animation: floatUp 12s linear infinite;
+    }
+    
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) translateX(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.5;
+      }
+      90% {
+        opacity: 0.5;
+      }
+      100% {
+        transform: translateY(-105vh) translateX(var(--drift));
+        opacity: 0;
+      }
+    }
+    
+    /* About Teaser Columns (Mobile-First) */
+    .about-teaser {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+    
+    .teaser-img-wrapper {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
+    
+    .teaser-img {
+      width: 100%;
+      height: 350px;
+      object-fit: cover;
+      transition: var(--transition-slow);
+    }
+    
+    .teaser-content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .teaser-text {
+      color: var(--text-muted);
+      margin-bottom: 25px;
+      font-size: 1rem;
+    }
+    
+    @media (min-width: 1024px) {
+      .about-teaser {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 80px;
+        align-items: center;
+      }
+      .teaser-img {
+        height: 520px;
+      }
+      .teaser-img-wrapper:hover .teaser-img {
+        transform: scale(1.04);
+      }
+    }
+    
+    /* Taste Teaser Columns (Mobile-First) */
+    .taste-teaser-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+    
+    @media (min-width: 768px) {
+      .taste-teaser-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
+      }
+    }
+    
+    /* Experience pillars (Mobile-First) */
+    .experience-pillars-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+    
+    @media (min-width: 768px) {
+      .experience-pillars-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Scroll Progress Bar -->
+  <div class="scroll-progress"></div>
+
+  <!-- Noise Film Grain Overlay -->
+  <div class="noise-overlay"></div>
+
+  <!-- Custom Cursor Elements -->
+  <div class="custom-cursor-dot"></div>
+  <div class="custom-cursor-circle"></div>
+
+  <!-- Page Loader -->
+  <div class="page-loader">
+    <div class="loader-content">
+      <div class="loader-logo">Sarovara<span>Restoobar</span></div>
+      <div class="loader-bar-bg">
+        <div class="loader-bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVIGATION -->
+  <header class="header-nav">
+    <a href="index.html" class="nav-logo clickable">
+      <img src="assets/logo.svg" alt="Sarovara Restoobar Logo">
+    </a>
+    
+    <nav class="nav-links">
+      <a href="index.html" class="active clickable">Home</a>
+      <a href="menu.html" class="clickable">Menu</a>
+      <a href="about.html" class="clickable">About</a>
+      <a href="experience.html" class="clickable">Experience</a>
+      <a href="reviews.html" class="clickable">Reviews</a>
+      <a href="reserve.html" class="clickable">Reserve</a>
+    </nav>
+    
+    <div class="nav-cta">
+      <a href="reserve.html" class="btn btn-primary btn-shimmer clickable">Reserve a Table</a>
+    </div>
+    
+    <!-- Mobile Hamburger Toggle -->
+    <div class="hamburger clickable">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Overlay -->
+  <div class="mobile-nav-overlay">
+    <nav class="mobile-nav-links">
+      <a href="index.html" class="active clickable">Home</a>
+      <a href="menu.html" class="clickable">Menu<span>Dishes</span></a>
+      <a href="about.html" class="clickable">About<span>Roots</span></a>
+      <a href="experience.html" class="clickable">Experience<span>Vibe</span></a>
+      <a href="reviews.html" class="clickable">Reviews<span>Guests</span></a>
+      <a href="reserve.html" class="clickable">Reserve<span>Book</span></a>
+    </nav>
+    <div class="mobile-cta-wrapper">
+      <a href="reserve.html" class="btn btn-primary btn-shimmer clickable">Reserve a Table</a>
+    </div>
+  </div>
+
+  <!-- HERO SECTION -->
+  <section class="hero" id="home">
+    <div class="hero-bg-wrapper">
+      <div class="hero-bg"></div>
+    </div>
+    <div class="hero-overlay"></div>
+    
+    <!-- Floating CSS Particles -->
+    <div class="particles-container">
+      <div class="particle" style="left: 8%; --drift: 40px; animation-delay: 0s;"></div>
+      <div class="particle" style="left: 23%; --drift: -50px; animation-delay: 2s; animation-duration: 10s;"></div>
+      <div class="particle" style="left: 38%; --drift: 60px; animation-delay: 4s;"></div>
+      <div class="particle" style="left: 54%; --drift: -30px; animation-delay: 1s; animation-duration: 14s;"></div>
+      <div class="particle" style="left: 69%; --drift: 40px; animation-delay: 6s; animation-duration: 8s;"></div>
+      <div class="particle" style="left: 84%; --drift: -60px; animation-delay: 3s;"></div>
+      <div class="particle" style="left: 92%; --drift: 30px; animation-delay: 5s; animation-duration: 11s;"></div>
+      <div class="particle" style="left: 17%; --drift: 20px; animation-delay: 8s;"></div>
+      <div class="particle" style="left: 48%; --drift: -40px; animation-delay: 7s;"></div>
+      <div class="particle" style="left: 77%; --drift: 50px; animation-delay: 9s; animation-duration: 9s;"></div>
+    </div>
+    
+    <div class="hero-content">
+      <span class="hero-label">Est. in Bengaluru</span>
+      <h1 class="hero-title">Where Karnataka<br><span>Comes Alive</span></h1>
+      <p class="hero-desc">Taste the Roots of Karnataka — Fine Dining · Resto-Bar · Live Music</p>
+      <div class="hero-ctas">
+        <a href="menu.html" class="btn btn-outline clickable">View Menu</a>
+        <a href="reserve.html" class="btn btn-primary btn-shimmer clickable">Reserve a Table</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT / STORY TEASER -->
+  <section class="section-padding" style="background-color: var(--bg-charcoal);">
+    <div class="container">
+      <div class="about-teaser">
+        <div class="teaser-img-wrapper reveal">
+          <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=900&q=80" alt="Sarovara Restoobar Ambiance" class="teaser-img">
+        </div>
+        <div class="teaser-content reveal">
+          <span class="section-accent">The Story</span>
+          <h2 class="section-title split-text" style="text-align: left; margin-bottom: 25px;">A Restoobar Unlike Any Other</h2>
+          <p class="teaser-text">Rooted in the authentic heritage of Kannada culture, Sarovara Restoobar blends traditional Naati-style culinary secrets with a premium fine dining atmosphere. Located next to Kengeri Metro Station, Mysore Road, we celebrate generous portions, hand-crafted cocktails, and a soulful Kannada musical ambiance.</p>
+          <a href="about.html" class="btn btn-outline clickable">Discover Our Story</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIGNATURE DISHES TEASER -->
+  <section class="section-padding" style="background-color: #090807; border-top: 1px solid rgba(255,255,255,0.02);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-accent">From Our Kitchen</span>
+        <h2 class="section-title split-text">Signature Taste</h2>
+      </div>
+      
+      <div class="taste-teaser-grid">
+        <!-- Biryani -->
+        <div class="reveal">
+          <div class="dish-card">
+            <div class="dish-badge">Must Try</div>
+            <div class="dish-card-img-wrapper">
+              <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600&q=80" alt="Kengeri Naati Biryani" class="dish-card-img">
+              <div class="dish-card-gradient"></div>
+            </div>
+            <div class="dish-card-content">
+              <div>
+                <span class="dish-category">Traditional Biryani</span>
+                <h3 class="dish-title">Kengeri Naati Mutton Biryani</h3>
+              </div>
+              <div class="dish-price">₹450 - ₹580</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Mutton Curry -->
+        <div class="reveal">
+          <div class="dish-card">
+            <div class="dish-badge">Chef Special</div>
+            <div class="dish-card-img-wrapper">
+              <img src="https://images.unsplash.com/photo-1574653853027-5382a3d23a15?w=600&q=80" alt="Sarjapura Mutton Curry" class="dish-card-img">
+              <div class="dish-card-gradient"></div>
+            </div>
+            <div class="dish-card-content">
+              <div>
+                <span class="dish-category">Naati Curries</span>
+                <h3 class="dish-title">Sarjapura Spiced Mutton Curry</h3>
+              </div>
+              <div class="dish-price">₹480 - ₹620</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Cocktails -->
+        <div class="reveal">
+          <div class="dish-card">
+            <div class="dish-card-img-wrapper">
+              <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600&q=80" alt="Karnataka Heritage Cocktail" class="dish-card-img">
+              <div class="dish-card-gradient"></div>
+            </div>
+            <div class="dish-card-content">
+              <div>
+                <span class="dish-category">Signature Mixology</span>
+                <h3 class="dish-title">Sarovara Sunset Sunset</h3>
+              </div>
+              <div class="dish-price">₹350 - ₹450</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div style="text-align: center; margin-top: 40px;" class="reveal">
+        <a href="menu.html" class="btn btn-outline clickable">Explore Full Menu <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE TEASER -->
+  <section class="section-padding" style="background-color: var(--bg-charcoal); border-top: 1px solid rgba(255,255,255,0.02);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-accent">Ambiance</span>
+        <h2 class="section-title split-text">Immersive Experiences</h2>
+      </div>
+      
+      <div class="experience-pillars-grid">
+        <div class="glass-card reveal" style="text-align: center;">
+          <i class="fa-solid fa-music" style="font-size: 2rem; color: var(--primary); margin-bottom: 20px;"></i>
+          <h3 class="heading-style" style="font-family: var(--font-display); font-size: 1.3rem; margin-bottom: 12px;">Live Kannada Music</h3>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Soulful melodies and classic Kannada hits performed live every single evening to elevate your dining vibe.</p>
+        </div>
+        <div class="glass-card reveal" style="text-align: center;">
+          <i class="fa-solid fa-utensils" style="font-size: 2rem; color: var(--primary); margin-bottom: 20px;"></i>
+          <h3 class="heading-style" style="font-family: var(--font-display); font-size: 1.3rem; margin-bottom: 12px;">Private Dining Rooms</h3>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Intimate, beautiful spaces designed for family gatherings, office parties, and private celebrations.</p>
+        </div>
+        <div class="glass-card reveal" style="text-align: center;">
+          <i class="fa-solid fa-martini-glass-citrus" style="font-size: 2rem; color: var(--primary); margin-bottom: 20px;"></i>
+          <h3 class="heading-style" style="font-family: var(--font-display); font-size: 1.3rem; margin-bottom: 12px;">Happy Hour Food</h3>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Specially curated bar food bites paired with our popular dark amber spirits, available daily from 4 PM - 7 PM.</p>
+        </div>
+      </div>
+      
+      <div style="text-align: center;" class="reveal">
+        <a href="experience.html" class="btn btn-outline clickable">Immerse Yourself</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- [5.5] TRENDING INSTAGRAM REELS GALLERY -->
+  <section class="section-padding reels-section" style="background-color: #090807; border-top: 1px solid rgba(255,255,255,0.02);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-accent">Trending Vibes</span>
+        <h2 class="section-title split-text">Sarovara on Reels</h2>
+      </div>
+      
+      <div class="reels-grid">
+        <!-- Reel 1: Live Music Stage Vibe (ID: DUK1KY-gXZd) -->
+        <div class="reveal">
+          <div class="reel-card clickable" data-reel-id="DUK1KY-gXZd">
+            <div class="reel-iframe-wrapper">
+              <div class="reel-placeholder" style="background-image: url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600&q=80');">
+                <div class="reel-placeholder-content">
+                  <div class="reel-play-btn"><i class="fa-solid fa-play"></i></div>
+                  <span class="reel-tag">Live Music Stage</span>
+                  <h3 class="reel-title">Soulful Kannada Melodies</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reel 2: Culinary Vibe - Naati Mutton Curry/Biryani (ID: DUud4eQARZt) -->
+        <div class="reveal">
+          <div class="reel-card clickable" data-reel-id="DUud4eQARZt">
+            <div class="reel-iframe-wrapper">
+              <div class="reel-placeholder" style="background-image: url('https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600&q=80');">
+                <div class="reel-placeholder-content">
+                  <div class="reel-play-btn"><i class="fa-solid fa-play"></i></div>
+                  <span class="reel-tag">Authentic Taste</span>
+                  <h3 class="reel-title">Naati Biryani Secret Recipes</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reel 3: Mixology & Social Vibe - Signature Cocktails (ID: DT5W-KIgU9k) -->
+        <div class="reveal">
+          <div class="reel-card clickable" data-reel-id="DT5W-KIgU9k">
+            <div class="reel-iframe-wrapper">
+              <div class="reel-placeholder" style="background-image: url('https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600&q=80');">
+                <div class="reel-placeholder-content">
+                  <div class="reel-play-btn"><i class="fa-solid fa-play"></i></div>
+                  <span class="reel-tag">Heritage Mixology</span>
+                  <h3 class="reel-title">Kannada Heritage Cocktails</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [6] REVIEWS GLIMPSE -->
+  <section class="section-padding" style="background-color: #090807; border-top: 1px solid rgba(255,255,255,0.02);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-accent">Guest Feedback</span>
+        <h2 class="section-title split-text">What Our Guests Say</h2>
+      </div>
+      
+      <div class="about-teaser" style="margin-bottom: 40px;">
+        <!-- Left: rating card -->
+        <div class="glass-card reveal" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: 15px; width: 100%;">
+          <div style="font-family: var(--font-display); font-size: 3.5rem; font-weight: 700; color: var(--accent-gold); line-height: 1;">4.6 ★</div>
+          <div>
+            <div style="color: var(--accent-gold); font-size: 1.1rem; margin-bottom: 5px;">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star-half-stroke"></i>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Based on 411 Google reviews</p>
+          </div>
+        </div>
+        
+        <!-- Right: featured review -->
+        <div class="review-card reveal" style="width: 100%;">
+          <div class="review-header">
+            <div class="reviewer-avatar">RK</div>
+            <div class="reviewer-info">
+              <h4>Rajesh Kumar</h4>
+              <div class="reviewer-rating">
+                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+              </div>
+            </div>
+          </div>
+          <p class="review-excerpt">"Sarovara Restoobar serves the best Naati Mutton Biryani in Kengeri! The mutton pieces were incredibly tender, and the spices were perfectly balanced. Visited with my family, outstanding hospitality."</p>
+        </div>
+      </div>
+      
+      <div style="text-align: center;" class="reveal">
+        <a href="reviews.html" class="btn btn-outline clickable">Read All Reviews</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- [7] RESERVATION & LOCATION GLIMPSE -->
+  <section class="section-padding" style="background-color: var(--bg-charcoal); border-top: 1px solid rgba(255,255,255,0.02); position: relative; overflow: hidden;">
+    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 70%; height: 70%; background: radial-gradient(circle, rgba(196, 90, 26, 0.08) 0%, rgba(0,0,0,0) 70%); z-index: 1; pointer-events: none;"></div>
+    <div class="container" style="position: relative; z-index: 2;">
+      <div class="section-header">
+        <span class="section-accent">Table Bookings</span>
+        <h2 class="section-title split-text">Reserve Your Table</h2>
+      </div>
+      
+      <div class="glass-card reveal" style="max-width: 650px; margin: 0 auto 40px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.5);">
+        <i class="fa-regular fa-calendar-check" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 20px;"></i>
+        <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-bottom: 12px; font-weight: 500;">Instant Online Reservations</h3>
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 25px; line-height: 1.7;">Secure your table for lunch, dinner, live music nights, or book a private dining room. Get instant SMS confirmation.</p>
+        <div style="display: flex; flex-direction: column; justify-content: center; gap: 15px; margin-bottom: 10px; font-size: 0.9rem; color: var(--text-light);">
+          <p><i class="fa-solid fa-location-dot" style="color: var(--primary); margin-right: 8px;"></i> Next to Kengeri Metro Station, Mysore Road</p>
+          <p><i class="fa-solid fa-phone" style="color: var(--primary); margin-right: 8px;"></i> 099000 06391 / 06392</p>
+        </div>
+      </div>
+      
+      <div style="text-align: center;" class="reveal">
+        <a href="reserve.html" class="btn btn-primary btn-shimmer clickable">Book A Table Now</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-info-col">
+        <div class="footer-logo"><img src="assets/logo.svg" alt="Sarovara Restoobar Logo"></div>
+        <p>A premier fine-dining resto-bar located in Kengeri, Bengaluru. Celebrating the rich flavors of Naati cuisine and heritage Kannada music.</p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/sarovara.restoobar/" target="_blank" class="social-icon clickable"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="social-icon clickable"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="https://maps.app.goo.gl/kengerilocation" target="_blank" class="social-icon clickable"><i class="fa-solid fa-map-location-dot"></i></a>
+        </div>
+      </div>
+      
+      <div class="footer-col">
+        <h3>Explore</h3>
+        <div class="footer-links">
+          <a href="index.html" class="clickable">Home</a>
+          <a href="menu.html" class="clickable">Menu</a>
+          <a href="about.html" class="clickable">About Story</a>
+          <a href="experience.html" class="clickable">Vibe & Ambiance</a>
+          <a href="reviews.html" class="clickable">Reviews</a>
+          <a href="reserve.html" class="clickable">Reservations</a>
+        </div>
+      </div>
+      
+      <div class="footer-col">
+        <h3>Hours</h3>
+        <div class="footer-hours">
+          <p><i class="fa-regular fa-clock"></i> Daily: 11:00 AM – 12:00 AM</p>
+          <p><i class="fa-solid fa-martini-glass"></i> Happy Hours: 4:00 PM – 7:00 PM</p>
+          <p><i class="fa-solid fa-music"></i> Live Music: 7:30 PM onwards</p>
+        </div>
+      </div>
+      
+      <div class="footer-col">
+        <h3>Contact</h3>
+        <div class="footer-contact">
+          <p><i class="fa-solid fa-phone"></i> 099000 06391 / 06392</p>
+          <p><i class="fa-solid fa-location-dot"></i> Metro Station, Mysore Rd, next to Kengeri, Bengaluru – 560060</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>© 2025 Sarovara Restoobar · Kengeri, Bengaluru. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top clickable"><i class="fa-solid fa-arrow-up"></i></button>
+
+  <!-- External CDN Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+  
+  <!-- Central JS Interactions -->
+  <script src="main.js"></script>
+  
+  <!-- Page Specific GSAP Scroll Parallax & Tilt -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Initialize GSAP Parallax only on large screens
+      if (window.innerWidth >= 1024 && typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
+        gsap.to(".hero-bg-wrapper", {
+          scrollTrigger: {
+            trigger: ".hero",
+            start: "top top",
+            end: "bottom top",
+            scrub: true
+          },
+          yPercent: 15,
+          ease: "none"
+        });
+      }
+    });
+  </script>
+</body>
+</html>

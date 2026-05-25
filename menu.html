@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore the menu of Sarovara Restoobar. Authentic Kengeri Naati Biryani, mutton curries, coastal fish fry, desserts, and cocktails.">
+  <title>The Signature Menu | Sarovara Restoobar</title>
+  
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Central Design System Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Page Specific CSS -->
+  <style>
+    /* Category Filter Tabs (Mobile Horizontal Scroll by Default) */
+    .filter-tabs {
+      display: flex;
+      overflow-x: auto;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+      gap: 12px;
+      margin-bottom: 35px;
+      padding: 5px 10px 15px;
+      width: 100%;
+    }
+    
+    .filter-tabs::-webkit-scrollbar {
+      height: 3px;
+    }
+    .filter-tabs::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .filter-tabs::-webkit-scrollbar-thumb {
+      background: rgba(196, 90, 26, 0.3);
+      border-radius: 5px;
+    }
+    
+    .filter-tab {
+      flex-shrink: 0;
+      padding: 8px 18px;
+      border: 1px solid rgba(212, 168, 67, 0.1);
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+      transition: var(--transition-fast);
+      min-height: 40px; /* Comfortable mobile size */
+    }
+    
+    .filter-tab:hover,
+    .filter-tab.active {
+      border-color: var(--primary);
+      color: var(--text-light);
+      background-color: var(--primary-glow);
+    }
+    
+    @media (min-width: 768px) {
+      .filter-tabs {
+        justify-content: center;
+        overflow-x: visible;
+        flex-wrap: wrap;
+        padding: 0;
+        margin-bottom: 50px;
+      }
+    }
+    
+    /* Draggable Carousel Container (Mobile-First) */
+    .carousel-container {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      padding: 10px 0 40px;
+    }
+    
+    .carousel-track {
+      display: flex;
+      gap: 20px;
+      padding: 0 20px;
+      width: max-content;
+      will-change: transform;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+    
+    .carousel-card-wrapper {
+      width: 290px;
+      flex-shrink: 0;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    
+    @media (min-width: 768px) {
+      .carousel-container {
+        padding: 20px 0 60px;
+      }
+      .carousel-track {
+        gap: 30px;
+        padding: 0 50px;
+      }
+      .carousel-card-wrapper {
+        width: 380px;
+      }
+    }
+    
+    /* Full Grid List (Mobile-First Stacking) */
+    .menu-section-divider {
+      text-align: center;
+      margin: 60px 0 30px;
+      position: relative;
+    }
+    
+    .menu-section-divider h3 {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: var(--accent-gold);
+      display: inline-block;
+      padding: 0 15px;
+      background-color: var(--bg-charcoal);
+      position: relative;
+      z-index: 2;
+    }
+    
+    .menu-section-divider::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background-color: rgba(212, 168, 67, 0.08);
+      z-index: 1;
+    }
+    
+    .menu-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      margin-bottom: 40px;
+    }
+    
+    .menu-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px dashed rgba(212, 168, 67, 0.08);
+      padding-bottom: 15px;
+      transition: var(--transition-fast);
+    }
+    
+    .menu-item-info {
+      max-width: 75%;
+    }
+    
+    .menu-item-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--text-light);
+      margin-bottom: 5px;
+    }
+    
+    .menu-item-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    
+    .menu-item-price {
+      font-family: var(--font-body);
+      font-weight: 700;
+      color: var(--accent-gold);
+      font-size: 1.1rem;
+    }
+    
+    @media (min-width: 768px) {
+      .menu-section-divider {
+        margin: 80px 0 40px;
+      }
+      .menu-section-divider h3 {
+        font-size: 2rem;
+      }
+      .menu-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Scroll Progress Bar -->
+  <div class="scroll-progress"></div>
+
+  <!-- Noise Film Grain Overlay -->
+  <div class="noise-overlay"></div>
+
+  <!-- Custom Cursor Elements -->
+  <div class="custom-cursor-dot"></div>
+  <div class="custom-cursor-circle"></div>
+
+  <!-- Page Loader -->
+  <div class="page-loader">
+    <div class="loader-content">
+      <div class="loader-logo">Sarovara<span>Restoobar</span></div>
+      <div class="loader-bar-bg">
+        <div class="loader-bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVIGATION -->
+  <header class="header-nav">
+    <a href="index.html" class="nav-logo clickable">
+      <img src="assets/logo.svg" alt="Sarovara Restoobar Logo">
+    </a>
+    
+    <nav class="nav-links">
+      <a href="index.html" class="clickable">Home</a>
+      <a href="menu.html" class="active clickable">Menu</a>
+      <a href="about.html" class="clickable">About</a>
+      <a href="experience.html" class="clickable">Experience</a>
+      <a href="reviews.html" class="clickable">Reviews</a>
+      <a href="reserve.html" class="clickable">Reserve</a>
+    </nav>
+    
+    <div class="nav-cta">
+      <a href="reserve.html" class="btn btn-primary btn-shimmer clickable">Reserve a Table</a>
+    </div>
+    
+    <!-- Mobile Hamburger Toggle -->
+    <div class="hamburger clickable">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Overlay -->
+  <div class="mobile-nav-overlay">
+    <nav class="mobile-nav-links">
+      <a href="index.html" class="clickable">Home</a>
+      <a href="menu.html" class="active clickable">Menu<span>Dishes</span></a>
+      <a href="about.html" class="clickable">About<span>Roots</span></a>
+      <a href="experience.html" class="clickable">Experience<span>Vibe</span></a>
+      <a href="reviews.html" class="clickable">Reviews<span>Guests</span></a>
+      <a href="reserve.html" class="clickable">Reserve<span>Book</span></a>
+    </nav>
+    <div class="mobile-cta-wrapper">
+      <a href="reserve.html" class="btn btn-primary btn-shimmer clickable">Reserve a Table</a>
+    </div>
+  </div>
+
+  <!-- SUB-HERO BANNER -->
+  <section class="sub-hero">
+    <div class="sub-hero-bg" style="background-image: url('https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=1920&q=90');"></div>
+    <div class="sub-hero-overlay"></div>
+    <div class="sub-hero-content">
+      <span class="sub-hero-accent">Curated Delicacies</span>
+      <h1 class="sub-hero-title">The Signature Menu</h1>
+      <p class="sub-hero-desc">Explore Kengeri's premium blend of traditional Naati spices and heritage culinary craft.</p>
+    </div>
+  </section>
+
+  <!-- CAROUSEL SECTION -->
+  <section class="section-padding" style="background-color: var(--bg-charcoal); overflow: hidden;">
+    <div class="container">
+      <div class="section-header" style="margin-bottom: 30px;">
+        <span class="section-accent">Chef's Selection</span>
+        <h2 class="section-title split-text">Signature Masterpieces</h2>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 12px;">Swipe or drag with mouse to explore our house specialties.</p>
+      </div>
+      
+      <!-- Filter Tabs -->
+      <div class="filter-tabs reveal">
+        <button class="filter-tab active clickable" data-filter="all">All</button>
+        <button class="filter-tab clickable" data-filter="starters">Starters</button>
+        <button class="filter-tab clickable" data-filter="biryanis">Biryanis</button>
+        <button class="filter-tab clickable" data-filter="curries">Naati Curries</button>
+        <button class="filter-tab clickable" data-filter="seafood">Seafood</button>
+        <button class="filter-tab clickable" data-filter="cocktails">Cocktails</button>
+        <button class="filter-tab clickable" data-filter="desserts">Desserts</button>
+      </div>
+    </div>
+    
+    <!-- Drag/Swipe Carousel Container -->
+    <div class="carousel-container reveal">
+      <div class="carousel-track">
+        
+        <!-- Biryani -->
+        <div class="carousel-card-wrapper" data-category="biryanis">
+          <div class="dish-card">
+            <div class="dish-badge">Must Try</div>
+            <div class="dish-card-img-wrapper">
+              <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600&q=80" alt="Kengeri Naati Biryani" class="dish-card-img">
+              <div class="dish-card-gradient"></div>
+            </div>
+            <div class="dish-card-content">
+              <div>
+                <span class="dish-category">Traditional Biryanis</span>
+                <h3 class="dish-title">Kengeri Naati Mutton Biryani</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">Authentic small grain jeeraga samba rice cooked with tender pieces of mutton and spices.</p>
+              </div>
+              <div class="dish-price">₹450</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Mutton Curry -->
+        <div class="carousel-card-wrapper" data-category="curries">
+          <div class="dish-card">
+            <div class="dish-badge">Chef Special</div>
+            <div class="dish-card-img-wrapper">
+              <img src="https://images.unsplash.com/photo-1574653853027-5382a3d23a15?w=600&q=80" alt="Sarjapura Mutton Curry" class="dish-card-img">
+              <div class="dish-card-gradient"></div>
+            </div>
+            <div class="dish-card-content">
+              <div>
+                <span class="dish-category">Naati Curries</span>
+                <h3 class="dish-title">Sarjapura Spiced Mutton Curry</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">Traditional hot mutton curry prepared in coconut, fresh spices, and hot green chilis.</p>
+              </div>
+              <div class="dish-price">₹480</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Seafood -->
+        <div class="carousel-card-wrapper" data-category="seafood">
+          <div class="dish-card">
+            <div class="dish-badge">Coastal Special</div>
+            <div class="dish-card-img-wrapper">
+              <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=600&q=80" alt="Masala Fish Fry" class="dish-card-img">
+              <div class="dish-card-gradient"></div>
+            </div>
+            <div class="dish-card-content">
+              <div>
+                <span class="dish-category">Seafood Classics</span>
+                <h3 class="dish-title">Karavali Masala Fish Fry</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">Fresh catch of the day marinated in hot Mangalorean spice paste and pan-seared to perfection.</p>
+              </div>
+              <div class="dish-price">₹520</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Starter -->
+        <div class="carousel-card-wrapper" data-category="starters">
+          <div class="dish-card">
+            <div class="dish-card-img-wrapper">
+              <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&q=80" alt="Chicken Pepper Fry" class="dish-card-img">
+              <div class="dish-card-gradient"></div>
+            </div>
+            <div class="dish-card-content">
+              <div>
+                <span class="dish-category">Karnataka Starters</span>
+                <h3 class="dish-title">Naati Pepper Chicken Dry</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">Crispy chicken bites wok-tossed with freshly crushed black pepper and regional green chilies.</p>
+              </div>
+              <div class="dish-price">₹380</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Cocktail -->
+        <div class="carousel-card-wrapper" data-category="cocktails">
+          <div class="dish-card">
+            <div class="dish-badge">Must Try</div>
+            <div class="dish-card-img-wrapper">
+              <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600&q=80" alt="Sarovara Sunset Cocktail" class="dish-card-img">
+              <div class="dish-card-gradient"></div>
+            </div>
+            <div class="dish-card-content">
+              <div>
+                <span class="dish-category">Signature Mixology</span>
+                <h3 class="dish-title">Sarovara Sunset Sunset</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">House-infused whiskey blended with orange juice, dark honey syrup, and aromatic bitters.</p>
+              </div>
+              <div class="dish-price">₹350</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Dessert -->
+        <div class="carousel-card-wrapper" data-category="desserts">
+          <div class="dish-card">
+            <div class="dish-card-img-wrapper">
+              <img src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=800&q=80" alt="Mysurpa Tart" class="dish-card-img">
+              <div class="dish-card-gradient"></div>
+            </div>
+            <div class="dish-card-content">
+              <div>
+                <span class="dish-category">Fusion Sweet</span>
+                <h3 class="dish-title">Traditional Mysurpa Tart</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">Deconstructed traditional chickpea flour fudge served in a crisp buttery tart shell with whipped cardamom cream.</p>
+              </div>
+              <div class="dish-price">₹280</div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- FULL MENU GRID LIST -->
+  <section class="section-padding" style="background-color: #090807; border-top: 1px solid rgba(255,255,255,0.02);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-accent">A La Carte</span>
+        <h2 class="section-title split-text">Explore The Catalog</h2>
+      </div>
+      
+      <!-- Starters Section -->
+      <div class="menu-section-divider reveal">
+        <h3>Starters</h3>
+      </div>
+      <div class="menu-grid reveal">
+        <div class="menu-item">
+          <div class="menu-item-info">
+            <h4 class="menu-item-title">Mutton Keema Balls (Gola)</h4>
+            <p class="menu-item-desc">Minced mutton rolled into balls with secret spices and deep fried.</p>
+          </div>
+          <span class="menu-item-price">₹320</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-info">
+            <h4 class="menu-item-title">Guntur Chicken Tikka</h4>
+            <p class="menu-item-desc">Succulent chicken pieces grilled in tandoor with hot Guntur chili paste.</p>
+          </div>
+          <span class="menu-item-price">₹290</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-info">
+            <h4 class="menu-item-title">Pepper Mushroom Fry</h4>
+            <p class="menu-item-desc">Fresh button mushrooms sautéed with black pepper, curry leaves, and chilis.</p>
+          </div>
+          <span class="menu-item-price">₹240</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-info">
+            <h4 class="menu-item-title">Paneer Ghee Roast</h4>
+            <p class="menu-item-desc">Cottage cheese chunks cooked in pure ghee with Kundapur spices.</p>
+          </div>
+          <span class="menu-item-price">₹280</span>
+        </div>
+      </div>
+      
+      <!-- Main Course Section -->
+      <div class="menu-section-divider reveal">
+        <h3>Main Course & Naati Staples</h3>
+      </div>
+      <div class="menu-grid reveal">
+        <div class="menu-item">
+          <div class="menu-item-info">
+            <h4 class="menu-item-title">Naati Chicken Biryani</h4>
+            <p class="menu-item-desc">Aromatic jeeraga samba rice cooked with country chicken and herbs.</p>
+          </div>
+          <span class="menu-item-price">₹380</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-info">
+            <h4 class="menu-item-title">Ragi Mudde (2 Units)</h4>
+            <p class="menu-item-desc">Traditional steamed finger millet balls. Highly recommended with mutton curry.</p>
+          </div>
+          <span class="menu-item-price">₹80</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-info">
+            <h4 class="menu-item-title">Karavali Crab Masala</h4>
+            <p class="menu-item-desc">Fresh mud crabs cooked in a spicy, coastal coconut curry base.</p>
+          </div>
+          <span class="menu-item-price">₹580</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-info">
+            <h4 class="menu-item-title">Neer Dosa (3 Units)</h4>
+            <p class="menu-item-desc">Paper-thin soft rice crepes, ideal for coastal curries.</p>
+          </div>
+          <span class="menu-item-price">₹70</span>
+        </div>
+      </div>
+      
+      <!-- Drinks Section -->
+      <div class="menu-section-divider reveal">
+        <h3>Signature Beverages</h3>
+      </div>
+      <div class="menu-grid reveal">
+        <div class="menu-item">
+          <div class="menu-item-info">
+            <h4 class="menu-item-title">Kengeri Cold Brew</h4>
+            <p class="menu-item-desc">House cold brew coffee mixed with dark rum and a splash of milk.</p>
+          </div>
+          <span class="menu-item-price">₹360</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-info">
+            <h4 class="menu-item-title">Cardamom Sour</h4>
+            <p class="menu-item-desc">Gin blended with fresh lime juice, egg white, and cardamom reduction.</p>
+          </div>
+          <span class="menu-item-price">₹320</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-info">
+            <h4 class="menu-item-title">Kokum Fizz (Non-Alcoholic)</h4>
+            <p class="menu-item-desc">Traditional kokum juice mixed with club soda, black salt, and fresh mint.</p>
+          </div>
+          <span class="menu-item-price">₹180</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-info">
+            <h4 class="menu-item-title">Sarovara Dark Amber Stout</h4>
+            <p class="menu-item-desc">Local craft stout beer on tap, notes of coffee and roasted barley.</p>
+          </div>
+          <span class="menu-item-price">₹280</span>
+        </div>
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-info-col">
+        <div class="footer-logo"><img src="assets/logo.svg" alt="Sarovara Restoobar Logo"></div>
+        <p>A premier fine-dining resto-bar located in Kengeri, Bengaluru. Celebrating the rich flavors of Naati cuisine and heritage Kannada music.</p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/sarovara.restoobar/" target="_blank" class="social-icon clickable"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="social-icon clickable"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="https://maps.app.goo.gl/kengerilocation" target="_blank" class="social-icon clickable"><i class="fa-solid fa-map-location-dot"></i></a>
+        </div>
+      </div>
+      
+      <div class="footer-col">
+        <h3>Explore</h3>
+        <div class="footer-links">
+          <a href="index.html" class="clickable">Home</a>
+          <a href="menu.html" class="clickable">Menu</a>
+          <a href="about.html" class="clickable">About Story</a>
+          <a href="experience.html" class="clickable">Vibe & Ambiance</a>
+          <a href="reviews.html" class="clickable">Reviews</a>
+          <a href="reserve.html" class="clickable">Reservations</a>
+        </div>
+      </div>
+      
+      <div class="footer-col">
+        <h3>Hours</h3>
+        <div class="footer-hours">
+          <p><i class="fa-regular fa-clock"></i> Daily: 11:00 AM – 12:00 AM</p>
+          <p><i class="fa-solid fa-martini-glass"></i> Happy Hours: 4:00 PM – 7:00 PM</p>
+          <p><i class="fa-solid fa-music"></i> Live Music: 7:30 PM onwards</p>
+        </div>
+      </div>
+      
+      <div class="footer-col">
+        <h3>Contact</h3>
+        <div class="footer-contact">
+          <p><i class="fa-solid fa-phone"></i> 099000 06391 / 06392</p>
+          <p><i class="fa-solid fa-location-dot"></i> Metro Station, Mysore Rd, next to Kengeri, Bengaluru – 560060</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>© 2025 Sarovara Restoobar · Kengeri, Bengaluru. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top clickable"><i class="fa-solid fa-arrow-up"></i></button>
+
+  <!-- External CDN Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+  
+  <!-- Central JS Interactions -->
+  <script src="main.js"></script>
+  
+  <!-- Page Specific JavaScript -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // 1. Sub-Hero Parallax
+      if (window.innerWidth >= 1024 && typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
+        gsap.to(".sub-hero-bg", {
+          scrollTrigger: {
+            trigger: ".sub-hero",
+            start: "top top",
+            end: "bottom top",
+            scrub: true
+          },
+          yPercent: 15,
+          ease: "none"
+        });
+      }
+      
+      // 2. Initialize Vanilla Tilt (Only on Desktop)
+      if (window.innerWidth >= 1024 && typeof VanillaTilt !== "undefined") {
+        VanillaTilt.init(document.querySelectorAll(".dish-card"), {
+          max: 10,
+          speed: 400,
+          glare: true,
+          "max-glare": 0.2
+        });
+      }
+      
+      // 3. Category Filter Logic
+      const filterTabs = document.querySelectorAll(".filter-tab");
+      const carouselCards = document.querySelectorAll(".carousel-card-wrapper");
+      
+      filterTabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+          filterTabs.forEach(t => t.classList.remove("active"));
+          tab.classList.add("active");
+          
+          const filterValue = tab.getAttribute("data-filter");
+          
+          carouselCards.forEach(card => {
+            const cardCategory = card.getAttribute("data-category");
+            
+            if (filterValue === "all" || cardCategory === filterValue) {
+              card.style.display = "block";
+              setTimeout(() => {
+                card.style.opacity = "1";
+                card.style.transform = "scale(1)";
+              }, 50);
+            } else {
+              card.style.opacity = "0";
+              card.style.transform = "scale(0.85)";
+              setTimeout(() => {
+                card.style.display = "none";
+              }, 400);
+            }
+          });
+          
+          trackPositionX = window.innerWidth >= 768 ? 50 : 20; // Match track padding
+          carouselTrack.style.transform = `translateX(${trackPositionX}px)`;
+        });
+      });
+      
+      // 4. Draggable / Swipable Carousel
+      const carouselContainer = document.querySelector(".carousel-container");
+      const carouselTrack = document.querySelector(".carousel-track");
+      
+      let isDragging = false;
+      let startX;
+      let trackPositionX = window.innerWidth >= 768 ? 50 : 20;
+      let velocity = 0;
+      let lastX = 0;
+      let lastTime = 0;
+      
+      carouselContainer.addEventListener("mousedown", (e) => {
+        isDragging = true;
+        startX = e.pageX - trackPositionX;
+        lastX = e.pageX;
+        lastTime = Date.now();
+        carouselTrack.style.transition = "none";
+      });
+      
+      window.addEventListener("mouseup", () => {
+        if (!isDragging) return;
+        isDragging = false;
+        
+        carouselTrack.style.transition = "transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)";
+        trackPositionX += velocity * 130;
+        
+        checkCarouselBoundaries();
+      });
+      
+      window.addEventListener("mousemove", (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        
+        const x = e.pageX;
+        const deltaX = x - lastX;
+        const now = Date.now();
+        const deltaTime = now - lastTime;
+        
+        if (deltaTime > 0) {
+          velocity = deltaX / deltaTime;
+        }
+        
+        trackPositionX += deltaX;
+        carouselTrack.style.transform = `translateX(${trackPositionX}px)`;
+        
+        lastX = x;
+        lastTime = now;
+      });
+      
+      // Touch Support
+      carouselContainer.addEventListener("touchstart", (e) => {
+        isDragging = true;
+        startX = e.touches[0].pageX - trackPositionX;
+        lastX = e.touches[0].pageX;
+        lastTime = Date.now();
+        carouselTrack.style.transition = "none";
+      });
+      
+      window.addEventListener("touchend", () => {
+        if (!isDragging) return;
+        isDragging = false;
+        
+        carouselTrack.style.transition = "transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)";
+        trackPositionX += velocity * 130;
+        
+        checkCarouselBoundaries();
+      });
+      
+      window.addEventListener("touchmove", (e) => {
+        if (!isDragging) return;
+        
+        const x = e.touches[0].pageX;
+        const deltaX = x - lastX;
+        const now = Date.now();
+        const deltaTime = now - lastTime;
+        
+        if (deltaTime > 0) {
+          velocity = deltaX / deltaTime;
+        }
+        
+        trackPositionX += deltaX;
+        carouselTrack.style.transform = `translateX(${trackPositionX}px)`;
+        
+        lastX = x;
+        lastTime = now;
+      });
+      
+      function checkCarouselBoundaries() {
+        const containerWidth = carouselContainer.offsetWidth;
+        const trackWidth = carouselTrack.offsetWidth;
+        
+        const padding = window.innerWidth >= 768 ? 50 : 20;
+        const minX = containerWidth - trackWidth - padding;
+        const maxX = padding;
+        
+        if (trackWidth <= containerWidth) {
+          trackPositionX = padding;
+        } else if (trackPositionX > maxX) {
+          trackPositionX = maxX;
+        } else if (trackPositionX < minX) {
+          trackPositionX = minX;
+        }
+        
+        carouselTrack.style.transform = `translateX(${trackPositionX}px)`;
+      }
+      
+      window.addEventListener("resize", checkCarouselBoundaries);
+    });
+  </script>
+</body>
+</html>
