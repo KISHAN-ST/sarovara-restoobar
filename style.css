@@ -1472,13 +1472,13 @@ button, input, select, textarea {
 
 .reel-iframe {
   width: 100%;
-  height: calc(100% + 140px);
+  height: calc(100% + 240px);
   border: none;
   opacity: 0;
   transition: opacity 0.5s ease;
   z-index: 4;
   position: relative;
-  margin-top: -70px;
+  margin-top: -120px;
 }
 
 .reel-iframe.loaded {
