@@ -1391,6 +1391,7 @@ button, input, select, textarea {
   width: 100%;
   height: 100%;
   background-color: transparent;
+  overflow: hidden;
 }
 
 .reel-placeholder {
@@ -1471,12 +1472,13 @@ button, input, select, textarea {
 
 .reel-iframe {
   width: 100%;
-  height: 100%;
+  height: calc(100% + 70px);
   border: none;
   opacity: 0;
   transition: opacity 0.5s ease;
   z-index: 4;
   position: relative;
+  margin-top: -70px;
 }
 
 .reel-iframe.loaded {
