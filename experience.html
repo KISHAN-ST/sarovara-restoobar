@@ -14,108 +14,212 @@
   
   <!-- Page Specific CSS -->
   <style>
-    /* Pinned Zoom Cinematic Section (Mobile-First) */
-    .pinned-zoom-section {
-      position: relative;
-      height: 100vh;
-      width: 100%;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    /* Editorial Experience Hero */
+    .experience-hero {
+      padding: 120px 0 80px;
+      background: radial-gradient(circle at 10% 10%, rgba(212, 168, 67, 0.12), transparent 55%),
+                  linear-gradient(180deg, rgba(12, 10, 9, 0.95) 0%, rgba(12, 10, 9, 0.85) 55%, rgba(12, 10, 9, 1) 100%);
     }
-    
-    .zoom-bg-wrapper {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-      will-change: transform;
-    }
-    
-    .zoom-bg {
-      width: 100%;
-      height: 100%;
-      background-image: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1920&q=90');
-      background-size: cover;
-      background-position: center;
-    }
-    
-    .zoom-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: var(--bg-charcoal);
-      opacity: 0.9;
-      z-index: 2;
-      will-change: opacity;
-    }
-    
-    .zoom-content {
-      position: relative;
-      z-index: 3;
-      text-align: center;
-      padding: 0 20px;
-      width: 100%;
-      max-width: 800px;
-      will-change: transform, opacity;
-    }
-    
-    .zoom-subtitle {
-      font-family: var(--font-accent);
-      color: var(--accent-gold);
-      font-size: 2.2rem;
-      display: block;
-      margin-bottom: 5px;
-    }
-    
-    @media (min-width: 768px) {
-      .zoom-subtitle {
-        font-size: 3rem;
+
+    @media (min-width: 1024px) {
+      .experience-hero {
+        padding: 160px 0 110px;
       }
     }
-    
-    .zoom-title {
-      font-family: var(--font-display);
-      font-size: 2.2rem;
-      font-weight: 300;
-      letter-spacing: -1px;
-      line-height: 1.2;
+
+    .experience-hero-grid {
+      display: grid;
+      gap: 40px;
+      align-items: center;
     }
-    
-    .zoom-title span {
+
+    @media (min-width: 1024px) {
+      .experience-hero-grid {
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 70px;
+      }
+    }
+
+    .experience-hero-eyebrow {
+      font-family: var(--font-sub);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 0.8rem;
+      color: var(--accent-gold);
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .experience-hero-eyebrow::before {
+      content: '';
+      width: 32px;
+      height: 1px;
+      background-color: rgba(212, 168, 67, 0.5);
+    }
+
+    .experience-hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 5vw, 4.2rem);
+      line-height: 1.08;
+      font-weight: 400;
+      margin: 18px 0 16px;
+    }
+
+    .experience-hero-title span {
       color: var(--primary);
       font-weight: 600;
     }
-    
-    @media (min-width: 768px) {
-      .zoom-title {
-        font-size: 3.5rem;
-      }
+
+    .experience-hero-desc {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 560px;
+      line-height: 1.8;
     }
-    @media (min-width: 1024px) {
-      .zoom-title {
-        font-size: 4rem;
-      }
+
+    .experience-hero-list {
+      margin: 24px 0 34px;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 12px;
     }
-    
-    /* Pillars column layout */
-    .pillars-grid {
+
+    .experience-hero-list li {
       display: flex;
-      flex-direction: column;
-      gap: 30px;
+      gap: 12px;
+      align-items: flex-start;
+      color: var(--text-light);
     }
-    
+
+    .experience-hero-list li span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: var(--primary);
+      margin-top: 8px;
+      flex: 0 0 10px;
+    }
+
+    .experience-hero-media {
+      position: relative;
+    }
+
+    .experience-hero-photo {
+      width: 100%;
+      border-radius: 20px;
+      box-shadow: 0 25px 45px rgba(0, 0, 0, 0.45);
+      display: block;
+    }
+
+    .experience-hero-caption {
+      margin-top: 14px;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+    }
+
+    /* Editorial Feature Grid */
+    .experience-stories {
+      background-color: #0f0d0b;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .experience-stories-grid {
+      display: grid;
+      gap: 22px;
+    }
+
     @media (min-width: 768px) {
-      .pillars-grid {
-        display: grid;
+      .experience-stories-grid {
         grid-template-columns: repeat(3, 1fr);
-        gap: 25px;
       }
+    }
+
+    .experience-story-card {
+      padding: 26px 24px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+      border: 1px solid rgba(212, 168, 67, 0.12);
+      min-height: 220px;
+    }
+
+    .experience-story-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      margin: 14px 0 10px;
+    }
+
+    .experience-story-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    /* Editorial Quote */
+    .experience-quote {
+      background: linear-gradient(130deg, rgba(212, 168, 67, 0.12), rgba(196, 90, 26, 0.08));
+      text-align: center;
+      padding: 70px 0;
+    }
+
+    .experience-quote h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.9rem, 4vw, 3rem);
+      line-height: 1.3;
+      max-width: 820px;
+      margin: 0 auto 16px;
+    }
+
+    .experience-quote p {
+      font-size: 0.95rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* Evening Rituals */
+    .experience-rituals {
+      background-color: var(--bg-charcoal);
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .rituals-grid {
+      display: grid;
+      gap: 24px;
+    }
+
+    @media (min-width: 768px) {
+      .rituals-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .ritual-card {
+      padding: 24px 20px;
+      border-left: 2px solid rgba(212, 168, 67, 0.4);
+      background-color: rgba(12, 10, 9, 0.6);
+      border-radius: 14px;
+    }
+
+    .ritual-time {
+      font-family: var(--font-display);
+      color: var(--accent-gold);
+      font-size: 1.2rem;
+      letter-spacing: 1px;
+    }
+
+    .ritual-title {
+      font-size: 1.1rem;
+      margin: 10px 0 8px;
+    }
+
+    .ritual-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
     }
     
     /* Pinterest Mosaic Gallery (Mobile-First single column) */
@@ -269,55 +373,89 @@
     </div>
   </div>
 
-  <!-- SUB-HERO BANNER -->
-  <section class="sub-hero">
-    <div class="sub-hero-bg" style="background-image: url('https://images.unsplash.com/photo-1559339352-11d035aa65de?w=1920&q=90');"></div>
-    <div class="sub-hero-overlay"></div>
-    <div class="sub-hero-content">
-      <span class="sub-hero-accent">Sensory Immersion</span>
-      <h1 class="sub-hero-title">Vibe & Ambiance</h1>
-      <p class="sub-hero-desc">Explore the cinematic spaces, cozy corners, and musical evenings of Sarovara.</p>
-    </div>
-  </section>
-
-  <!-- PINNED ZOOM ENTER SEQUENCE -->
-  <section class="pinned-zoom-section">
-    <div class="zoom-bg-wrapper">
-      <div class="zoom-bg"></div>
-    </div>
-    <div class="zoom-overlay"></div>
-    <div class="zoom-content">
-      <span class="zoom-subtitle">Step Inside</span>
-      <h2 class="zoom-title">Where Warm Ambiance<br>Meets <span>Kannada Soul</span></h2>
-    </div>
-  </section>
-
-  <!-- PILLARS OF EXPERIENCE -->
-  <section class="section-padding" style="background-color: var(--bg-charcoal); border-top: 1px solid rgba(255,255,255,0.02);">
+  <!-- EDITORIAL HERO -->
+  <section class="experience-hero">
     <div class="container">
-      <div class="pillars-grid">
-        <!-- Pillar 1 -->
-        <div class="reveal">
-          <h3 style="font-family: var(--font-display); font-size: 1.4rem; color: var(--accent-gold); margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
-            <i class="fa-solid fa-guitar" style="color: var(--primary);"></i> Live Music Nights
-          </h3>
-          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.8;">We believe music connects souls. Every evening, our stage lights up with renowned local artists performing acoustic sets of evergreen Kannada classics and contemporary hits, providing a soulful and nostalgic soundtrack to your dining.</p>
+      <div class="experience-hero-grid">
+        <div>
+          <span class="experience-hero-eyebrow">Vibe & Ambiance</span>
+          <h1 class="experience-hero-title">A warm room for long conversations,<br><span>Kannada music, and Naati flavor</span></h1>
+          <p class="experience-hero-desc">Sarovara is designed for slow evenings and generous tables. From acoustic sets to glowing private rooms, every corner invites you to linger a little longer.</p>
+          <ul class="experience-hero-list">
+            <li><span></span><div>Live Kannada sessions that soften the room as the evening settles in.</div></li>
+            <li><span></span><div>Private dining rooms with warm light, calm acoustics, and attentive hosts.</div></li>
+            <li><span></span><div>Curated spirits and naati bites crafted for shared plates and long toasts.</div></li>
+          </ul>
+          <div class="hero-ctas">
+            <a href="reserve.html" class="btn btn-primary btn-shimmer clickable">Reserve a Table</a>
+            <a href="menu.html" class="btn btn-outline clickable">Explore the Menu</a>
+          </div>
         </div>
-        
-        <!-- Pillar 2 -->
-        <div class="reveal">
-          <h3 style="font-family: var(--font-display); font-size: 1.4rem; color: var(--accent-gold); margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
-            <i class="fa-solid fa-users" style="color: var(--primary);"></i> Private Celebrations
-          </h3>
-          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.8;">Host your corporate meets, birthday celebrations, or family get-togethers in our custom soundproofed private dining rooms. Equipped with comfortable premium seating, ambient lights, and dedicated service hosts.</p>
+        <div class="experience-hero-media">
+          <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1200&q=90" alt="Warm interior dining room" class="experience-hero-photo">
+          <div class="experience-hero-caption">Golden hour in the main dining hall</div>
         </div>
-        
-        <!-- Pillar 3 -->
-        <div class="reveal">
-          <h3 style="font-family: var(--font-display); font-size: 1.4rem; color: var(--accent-gold); margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
-            <i class="fa-solid fa-whiskey-glass" style="color: var(--primary);"></i> Curated Spirits & Bites
-          </h3>
-          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.8;">Our bar celebrates local fruits and spices in mixology. Enjoy our famous happy hour, showcasing single malts, draft beers, and custom cocktails paired with signature hot pepper-fry and roasted mutton naati snacks.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE STORIES -->
+  <section class="section-padding experience-stories">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-accent">Signature Moments</span>
+        <h2 class="section-title split-text">Three ways the night unfolds</h2>
+      </div>
+      <div class="experience-stories-grid">
+        <div class="experience-story-card reveal">
+          <i class="fa-solid fa-music" style="color: var(--primary); font-size: 1.4rem;"></i>
+          <h3>Live Kannada Sessions</h3>
+          <p>Soft acoustic sets, classic melodies, and curated playlists that keep the room warm without ever overpowering conversation.</p>
+        </div>
+        <div class="experience-story-card reveal">
+          <i class="fa-solid fa-champagne-glasses" style="color: var(--primary); font-size: 1.4rem;"></i>
+          <h3>Private Celebrations</h3>
+          <p>Intimate spaces for birthdays, family gatherings, and corporate dinners, styled with candlelight and dedicated service.</p>
+        </div>
+        <div class="experience-story-card reveal">
+          <i class="fa-solid fa-utensils" style="color: var(--primary); font-size: 1.4rem;"></i>
+          <h3>Naati Plates + Spirits</h3>
+          <p>Slow-simmered gravies, bar snacks with bite, and signature pours that pair with every chapter of the night.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDITORIAL QUOTE -->
+  <section class="experience-quote">
+    <div class="container">
+      <h2>"Every table feels like a story in the making, lit by warm tones, clinking glasses, and Kannada classics."</h2>
+      <p>Sarovara Restoobar</p>
+    </div>
+  </section>
+
+  <!-- EVENING RITUALS -->
+  <section class="section-padding experience-rituals">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-accent">Evening Rituals</span>
+        <h2 class="section-title split-text">From sunset to last call</h2>
+      </div>
+      <div class="rituals-grid">
+        <div class="ritual-card reveal">
+          <div class="ritual-time">6:00 PM</div>
+          <div class="ritual-title">Aperitif Hour</div>
+          <div class="ritual-desc">Start with citrus-forward spritzes and crisp, shareable small plates that set the tone.</div>
+        </div>
+        <div class="ritual-card reveal">
+          <div class="ritual-time">7:30 PM</div>
+          <div class="ritual-title">Live Sets</div>
+          <div class="ritual-desc">Kannada classics move through the room while the kitchen sends out slow-cooked favorites.</div>
+        </div>
+        <div class="ritual-card reveal">
+          <div class="ritual-time">10:00 PM</div>
+          <div class="ritual-title">Late-Night Bites</div>
+          <div class="ritual-desc">Spiced snacks, nightcap pours, and a relaxed pace that keeps the conversation going.</div>
         </div>
       </div>
     </div>
@@ -481,21 +619,7 @@
   <!-- Page Specific GSAP ScrollTrigger Sequence -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      // 1. Sub-Hero Parallax (Only on Desktop)
-      if (window.innerWidth >= 1024 && typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
-        gsap.to(".sub-hero-bg", {
-          scrollTrigger: {
-            trigger: ".sub-hero",
-            start: "top top",
-            end: "bottom top",
-            scrub: true
-          },
-          yPercent: 15,
-          ease: "none"
-        });
-      }
-      
-      // 2. Stagger Reveal for Pinterest Gallery (Only if GSAP is available)
+      // Stagger Reveal for Pinterest Gallery (Only if GSAP is available)
       if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
         gsap.from(".gallery-item", {
           scrollTrigger: {
