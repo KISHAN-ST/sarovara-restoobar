@@ -1483,8 +1483,8 @@ button, input, select, textarea {
 
 @media (min-width: 1024px) {
   .reel-iframe {
-    height: calc(100% + 320px);
-    margin-top: -160px;
+    height: calc(100% + 380px);
+    margin-top: -220px;
   }
 }
 
