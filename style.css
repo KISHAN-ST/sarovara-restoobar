@@ -1481,6 +1481,13 @@ button, input, select, textarea {
   margin-top: -120px;
 }
 
+@media (min-width: 1024px) {
+  .reel-iframe {
+    height: calc(100% + 320px);
+    margin-top: -160px;
+  }
+}
+
 .reel-iframe.loaded {
   opacity: 1;
 }
